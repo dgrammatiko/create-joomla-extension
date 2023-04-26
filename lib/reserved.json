@@ -1,0 +1,230 @@
+{
+  "component": [
+    "ajax",
+    "banners",
+    "config",
+    "contact",
+    "content",
+    "contenthistory",
+    "fields",
+    "finder",
+    "mailto",
+    "media",
+    "menus",
+    "modules",
+    "newsfeeds",
+    "privacy",
+    "search",
+    "tags",
+    "users",
+    "wrapper"
+  ],
+  "library": [
+    "php-encryption",
+    "phpass",
+    "src",
+    "vendor"
+  ],
+  "module": {
+    "administrator": [
+      "menu"
+    ],
+    "site": [
+      "menu"
+    ]
+  },
+  "plugin": {
+    "actionlog": [
+      "joomla"
+    ],
+    "api-authentication": [
+      "basic",
+      "token"
+    ],
+    "authentication": [
+      "cookie",
+      "joomla",
+      "ldap"
+    ],
+    "behaviour": [
+      "taggable",
+      "versionable"
+    ],
+    "captcha": [
+      "recaptcha",
+      "recaptcha_invisible"
+    ],
+    "content": [
+      "confirmconsent",
+      "contact",
+      "emailcloak",
+      "fields",
+      "finder",
+      "joomla",
+      "loadmodule",
+      "pagebreak",
+      "pagenavigation",
+      "vote"
+    ],
+    "editors": [
+      "codemirror",
+      "none",
+      "tinymce"
+    ],
+    "editors-xtd": [
+      "article",
+      "contact",
+      "fields",
+      "image",
+      "menu",
+      "module",
+      "pagebreak",
+      "readmore"
+    ],
+    "extension": [
+      "finder",
+      "joomla",
+      "namespacemap"
+    ],
+    "fields": [
+      "calendar",
+      "checkboxes",
+      "color",
+      "editor",
+      "imagelist",
+      "integer",
+      "list",
+      "media",
+      "radio",
+      "sql",
+      "subform",
+      "text",
+      "textarea",
+      "url",
+      "user",
+      "usergrouplist"
+    ],
+    "filesystem": [
+      "local"
+    ],
+    "finder": [
+      "categories",
+      "contacts",
+      "content",
+      "newsfeeds",
+      "tags"
+    ],
+    "installer": [
+      "folderinstaller",
+      "override",
+      "packageinstaller",
+      "urlinstaller",
+      "webinstaller"
+    ],
+    "media-action": [
+      "crop",
+      "resize",
+      "rotate"
+    ],
+    "multifactorauth": [
+      "email",
+      "fixed",
+      "totp",
+      "webauthn",
+      "yubikey"
+    ],
+    "privacy": [
+      "actionlogs",
+      "consents",
+      "contact",
+      "content",
+      "message",
+      "user"
+    ],
+    "quickicon": [
+      "downloadkey",
+      "extensionupdate",
+      "joomlaupdate",
+      "overridecheck",
+      "phpversioncheck",
+      "privacycheck"
+    ],
+    "sampledata": [
+      "blog",
+      "multilang",
+      "testing"
+    ],
+    "system": [
+      "accessibility",
+      "actionlogs",
+      "cache",
+      "debug",
+      "fields",
+      "highlight",
+      "httpheaders",
+      "jooa11y",
+      "languagecode",
+      "languagefilter",
+      "log",
+      "logout",
+      "logrotation",
+      "privacyconsent",
+      "redirect",
+      "remember",
+      "schedulerunner",
+      "sef",
+      "sessiongc",
+      "shortcut",
+      "skipto",
+      "stats",
+      "tasknotification",
+      "updatenotification",
+      "webauthn"
+    ],
+    "task": [
+      "checkfiles",
+      "demotasks",
+      "requests",
+      "sitestatus"
+    ],
+    "user": [
+      "contactcreator",
+      "joomla",
+      "profile",
+      "terms",
+      "token"
+    ],
+    "webservices": [
+      "banners",
+      "config",
+      "contact",
+      "content",
+      "installer",
+      "languages",
+      "media",
+      "menus",
+      "messages",
+      "modules",
+      "newsfeeds",
+      "plugins",
+      "privacy",
+      "redirect",
+      "tags",
+      "templates",
+      "users"
+    ],
+    "workflow": [
+      "featuring",
+      "notification",
+      "publishing"
+    ]
+  },
+  "template": {
+    "administrator": [
+        "atum"
+      ],
+    "site": [
+        "cassiopeia"
+      ]
+  }
+}

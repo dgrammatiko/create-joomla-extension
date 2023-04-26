@@ -1,0 +1,414 @@
+{
+  "component": {
+    "php": [
+      {
+        "path": "admin",
+        "name": "admin",
+        "children": [
+          {
+            "path": "admin/component.xml",
+            "name": "component.xml",
+            "type": "file",
+            "contents": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<extension type=\"component\" method=\"upgrade\" element=\"com_{{componentName}}\">\n  <name>{{componentNamePascal}} Component</name>\n  <element>com_{{componentNameLowercase}}</element>\n  <author>{{authorName}}</author>\n  <creationDate>{{date}}</creationDate>\n  <copyright>(C) {{year}} {{authorName}}, All Rights Reserved.</copyright>\n  <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>\n  <authorEmail>{{authorEmail}}</authorEmail>\n  <authorUrl>{{authorWebsite}}</authorUrl>\n  <version>0.0.0</version>\n  <description>Some description</description>\n  <namespace path=\"src\">{{companyNamePascal}}\\Component\\{{componentNamePascal}}</namespace>\n  <files folder=\"site\">\n    <folder>src</folder>\n    <folder>tmpl</folder>\n  </files>\n  <media folder=\"media\" destination=\"com_{{componentNameLowercase}}\">\n    <folder>js</folder>\n    <folder>css</folder>\n    <folder>images</folder>\n  </media>\n  <administration>\n    <files folder=\"admin\">\n      <folder>services</folder>\n    </files>\n  </administration>\n</extension>\n"
+          },
+          {
+            "path": "admin/services",
+            "name": "services",
+            "children": [
+              {
+                "path": "admin/services/provider.php",
+                "name": "provider.php",
+                "type": "file",
+                "contents": "<?php\n\n{{copyright}}\n\ndefined('_JEXEC') || die;\n\nuse Joomla\\CMS\\Dispatcher\\ComponentDispatcherFactoryInterface;\nuse Joomla\\CMS\\Extension\\ComponentInterface;\nuse Joomla\\CMS\\Extension\\MVCComponent;\nuse Joomla\\CMS\\Extension\\Service\\Provider\\ComponentDispatcherFactory;\nuse Joomla\\CMS\\Extension\\Service\\Provider\\MVCFactory;\nuse Joomla\\CMS\\MVC\\Factory\\MVCFactoryInterface;\nuse Joomla\\DI\\Container;\nuse Joomla\\DI\\ServiceProviderInterface;\n\n/**\n * The cache service provider.\n *\n * @since  0.0.1\n */\nreturn new class implements ServiceProviderInterface\n{\n  /**\n   * Registers the service provider with a DI container.\n   *\n   * @param   Container  $container  The DI container.\n   *\n   * @return  void\n   *\n   * @since   0.0.1\n   */\n  public function register(Container $container)\n  {\n    $container->registerServiceProvider(new MVCFactory('\\\\{{companyNamePascal}}\\\\Component\\\\{{componentNamePascal}}'));\n    $container->registerServiceProvider(new ComponentDispatcherFactory('\\\\{{companyNamePascal}}\\\\Component\\\\{{componentNamePascal}}'));\n\n    $container->set(\n      ComponentInterface::class,\n      function (Container $container)\n      {\n        $component = new MVCComponent($container->get(ComponentDispatcherFactoryInterface::class));\n\n        $component->setMVCFactory($container->get(MVCFactoryInterface::class));\n\n        return $component;\n      }\n    );\n  }\n};\n"
+              }
+            ],
+            "type": "directory"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "site",
+        "name": "site",
+        "children": [
+          {
+            "path": "site/src",
+            "name": "src",
+            "children": [
+              {
+                "path": "site/src/Controller",
+                "name": "Controller",
+                "children": [
+                  {
+                    "path": "site/src/Controller/DisplayController.php",
+                    "name": "DisplayController.php",
+                    "type": "file",
+                    "contents": "<?php\n\n{{copyright}}\n\nnamespace {{companyNamePascal}}\\Component\\{{componentNamePascal}}\\Site\\Controller;\n\n\\defined('_JEXEC') || die;\n\nuse Joomla\\CMS\\Application\\CMSApplication;\nuse Joomla\\CMS\\Factory;\nuse Joomla\\CMS\\Language\\Text;\nuse Joomla\\CMS\\MVC\\Controller\\BaseController;\nuse Joomla\\CMS\\MVC\\Factory\\MVCFactoryInterface;\n\nclass DisplayController extends BaseController\n{\n  /**\n   * Method to display a view.\n   *\n   * @param   boolean  $cachable   If true, the view output will be cached\n   * @param   array    $urlParams  An array of safe url parameters and their variable types, for valid values see JFilterInput::clean().\n   *\n   * @return  $this\n   *\n   * @see     FilterInput::clean()\n   */\n  public function display($cachable = false, $urlParams = [])\n  {\n    $cachable = Factory::getUser()->guest;\n\n    /*\n     * If the user's requesting a non-existing page and is using this as their default menu item, they'll get a \"view not found\" error.\n     * If that's the error they received, convert it to a more generic and human friendly \"content not found\" message.\n     */\n    try {\n      return parent::display($cachable, $urlParams);\n    } catch (\\Exception $e) {\n      $trace = $e->getTrace();\n\n      $thrower = $trace[0];\n\n      // If this is the \"view not found\" error, the thrower is JControllerLegacy::getView(); standardize to lowercased strings just in case\n      if (strtolower($thrower['class']) === 'basecontroller' && strtolower($thrower['function']) === 'getview') {\n        throw new \\Exception(Text::_('JERROR_LAYOUT_REQUESTED_RESOURCE_WAS_NOT_FOUND'), 404, $e);\n      }\n\n      // Some other error, just let it bubble up\n      throw $e;\n    }\n  }\n}\n"
+                  }
+                ],
+                "type": "directory"
+              },
+              {
+                "path": "site/src/Dispatcher",
+                "name": "Dispatcher",
+                "children": [
+                  {
+                    "path": "site/src/Dispatcher/Dispatcher.php",
+                    "name": "Dispatcher.php",
+                    "type": "file",
+                    "contents": "<?php\n\n{{copyright}}\n\nnamespace {{companyNamePascal}}\\Component\\{{componentNamePascal}}\\Site\\Dispatcher;\n\n\\defined('_JEXEC') || die;\n\nuse Joomla\\CMS\\Dispatcher\\ComponentDispatcher;\n\n/**\n * ComponentDispatcher class for com_{{componentNameLowercase}}\n */\nclass Dispatcher extends ComponentDispatcher\n{\n  public function dispatch()\n  {\n    parent::dispatch();\n  }\n}\n"
+                  }
+                ],
+                "type": "directory"
+              },
+              {
+                "path": "site/src/View",
+                "name": "View",
+                "children": [
+                  {
+                    "path": "site/src/View/default",
+                    "name": "default",
+                    "children": [
+                      {
+                        "path": "site/src/View/default/HtmlView.php",
+                        "name": "HtmlView.php",
+                        "type": "file",
+                        "contents": "<?php\n\n{{copyright}}\n\nnamespace {{companyNamePascal}}\\Component\\{{componentNamePascal}}\\Site\\View\\Default;\n\n\\defined('_JEXEC') || die;\n\nuse Joomla\\CMS\\Factory;\nuse Joomla\\CMS\\Language\\Text;\nuse Joomla\\CMS\\MVC\\View\\HtmlView as BaseHtmlView;\n\n/**\n * Default HTML view class\n */\nclass HtmlView extends BaseHtmlView\n{\n  /**\n   * Display the view\n   *\n   * @param   string  $tpl  The name of the template file to parse\n   *\n   * @return  mixed  A string if successful, otherwise a JError object.\n   */\n  public function display($tpl = null) {\n    $app    = Factory::getApplication();\n    $params = $app->getParams();\n    $title  = $params->get('page_title', '');\n\n    if (empty($title)) {\n      $title = $app->get('sitename');\n    } elseif ($app->get('sitename_pagetitles', 0) == 1) {\n      $title = Text::sprintf('JPAGETITLE', $app->get('sitename'), $title);\n    } elseif ($app->get('sitename_pagetitles', 0) == 2) {\n      $title = Text::sprintf('JPAGETITLE', $title, $app->get('sitename'));\n    }\n\n    $this->document->setTitle($title);\n\n    if ($params->get('menu-meta_description')) {\n      $this->document->setDescription($params->get('menu-meta_description'));\n    }\n\n    if ($params->get('robots')) {\n      $this->document->setMetaData('robots', $params->get('robots'));\n    }\n\n    return parent::display($tpl);\n  }\n}\n"
+                      },
+                      {
+                        "path": "site/src/View/default/metadata.xml",
+                        "name": "metadata.xml",
+                        "type": "file",
+                        "contents": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<metadata>\n  <view title=\"{{componentNamePascal}} Component\">\n    <message><![CDATA[{{componentNamePascal}} Component]]></message>\n  </view>\n</metadata>\n"
+                      }
+                    ],
+                    "type": "directory"
+                  }
+                ],
+                "type": "directory"
+              }
+            ],
+            "type": "directory"
+          },
+          {
+            "path": "site/tmpl",
+            "name": "tmpl",
+            "children": [
+              {
+                "path": "site/tmpl/default",
+                "name": "default",
+                "children": [
+                  {
+                    "path": "site/tmpl/default/default.php",
+                    "name": "default.php",
+                    "type": "file",
+                    "contents": "<?php\n\n{{copyright}}\n\ndefined('_JEXEC') || die;\n\necho '<h1>Hello world from com_{{componentNameLowercase}}</h1>';\n"
+                  },
+                  {
+                    "path": "site/tmpl/default/default.xml",
+                    "name": "default.xml",
+                    "type": "file",
+                    "contents": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<metadata>\n  <layout title=\"{{componentNamePascal}} Component\" option=\"home\">\n    <message>\n      <![CDATA[Render an {{componentNameLowercase}} component page]]>\n    </message>\n  </layout>\n</metadata>\n"
+                  }
+                ],
+                "type": "directory"
+              }
+            ],
+            "type": "directory"
+          }
+        ],
+        "type": "directory"
+      }
+    ],
+    "media": [
+      {
+        "path": "css",
+        "name": "css",
+        "children": [
+          {
+            "path": "css/index.css",
+            "name": "index.css",
+            "type": "file",
+            "contents": "/* {{componentNamePascal}} */\n\n/*\nbody {\n  background-color: rebeccapurple;\n}\n*/\n"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "js",
+        "name": "js",
+        "children": [
+          {
+            "path": "js/index.js",
+            "name": "index.js",
+            "type": "file",
+            "contents": "console.log('Hello from {{componentNamePascal}}');\n"
+          }
+        ],
+        "type": "directory"
+      }
+    ]
+  },
+  "library": {
+    "php": [
+      {
+        "path": "library.xml",
+        "name": "library.xml",
+        "type": "file",
+        "contents": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<extension type=\"library\" method=\"upgrade\">\n  <name>{{libraryNamePascal}} Library</name>\n  <libraryname>{{libraryNamePascal}}</libraryname>\n  <element>com_{{libraryNameLowercase}}</element>\n  <author>{{authorName}}</author>\n  <creationDate>{{date}}</creationDate>\n  <copyright>(C) {{year}} {{authorName}}, All Rights Reserved.</copyright>\n  <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>\n  <authorEmail>{{authorEmail}}</authorEmail>\n  <authorUrl>{{authorWebsite}}</authorUrl>\n  <version>0.0.0</version>\n  <description>Some description</description>\n  <namespace path=\"src\">{{companyNamePascal}}\\Library\\{{libraryNamePascal}}</namespace>\n  <files>\n    <folderm library=\"lib_{{libraryNamePascal}}\">src</folder>\n    <filename>{{libraryNameLowercase}}.xml</filename>\n  </files>\n</extension>\n"
+      }
+    ],
+    "media": [
+      {
+        "path": "css",
+        "name": "css",
+        "children": [
+          {
+            "path": "css/index.css",
+            "name": "index.css",
+            "type": "file",
+            "contents": "/* {{libraryNamePascal}} */\n\n/*\nbody {\n  background-color: rebeccapurple;\n}\n*/\n"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "js",
+        "name": "js",
+        "children": [
+          {
+            "path": "js/index.js",
+            "name": "index.js",
+            "type": "file",
+            "contents": "console.log('Hello from {{libraryNamePascal}}');\n"
+          }
+        ],
+        "type": "directory"
+      }
+    ]
+  },
+  "module": {
+    "php": [
+      {
+        "path": "module.xml",
+        "name": "module.xml",
+        "type": "file",
+        "contents": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<extension type=\"module\" client=\"{{clientNameLowercase}}\" method=\"upgrade\">\n  <name>mod_{{moduleNameLowercase}}</name>\n  <element>mod_{{moduleNameLowercase}}</element>\n  <author>{{authorName}}</author>\n  <creationDate>{{date}}</creationDate>\n  <copyright>(C) {{year}} {{authorName}}, All Rights Reserved.</copyright>\n  <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>\n  <authorEmail>{{authorEmail}}</authorEmail>\n  <authorUrl>{{authorWebsite}}</authorUrl>\n  <version>0.0.0</version>\n  <description>Some description</description>\n  <namespace path=\"src\">{{companyNamePascal}}\\Module\\{{moduleNamePascal}}</namespace>\n  <files>\n    <folder>services</folder>\n    <folder module=\"mod_{{moduleNameLowercase}}\">src</folder>\n    <folder>tmpl</folder>\n  </files>\n  <media folder=\"media\" destination=\"mod_{{moduleNameLowercase}}\">\n    <folder>js</folder>\n    <folder>css</folder>\n    <folder>images</folder>\n  </media>\n  <config>\n    <fields name=\"params\">\n      <fieldset name=\"options\" label=\"Basic\">\n      </fieldset>\n      <fieldset name=\"advanced\">\n      </fieldset>\n    </fields>\n  </config>\n</extension>\n"
+      },
+      {
+        "path": "services",
+        "name": "services",
+        "children": [
+          {
+            "path": "services/provider.php",
+            "name": "provider.php",
+            "type": "file",
+            "contents": "<?php\n\n{{copyright}}\n\n\\defined('_JEXEC') || die();\n\nuse Joomla\\CMS\\Extension\\Service\\Provider\\HelperFactory;\nuse Joomla\\CMS\\Extension\\Service\\Provider\\Module;\nuse Joomla\\CMS\\Extension\\Service\\Provider\\ModuleDispatcherFactory;\nuse Joomla\\DI\\Container;\nuse Joomla\\DI\\ServiceProviderInterface;\n\n/**\n * The {{moduleNamePascal}} module service provider.\n *\n * @since  0.0.1\n */\nreturn new class implements ServiceProviderInterface\n{\n  /**\n   * Registers the service provider with a DI container.\n   *\n   * @param   Container  $container  The DI container.\n   *\n   * @return  void\n   *\n   * @since   0.0.1\n   */\n  public function register(Container $container)\n  {\n    $container->registerServiceProvider(new ModuleDispatcherFactory('\\\\{{companyNamePascal}}\\\\Module\\\\{{moduleNamePascal}}'))\n      ->registerServiceProvider(new HelperFactory('\\\\{{companyNamePascal}}\\\\Module\\\\{{moduleNamePascal}}\\\\{{clientNamePascal}}\\\\Helper'))\n      ->registerServiceProvider(new Module());\n  }\n};\n"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "src",
+        "name": "src",
+        "children": [
+          {
+            "path": "src/Dispatcher",
+            "name": "Dispatcher",
+            "children": [
+              {
+                "path": "src/Dispatcher/Dispatcher.php",
+                "name": "Dispatcher.php",
+                "type": "file",
+                "contents": "<?php\n\n{{copyright}}\n\nnamespace {{companyNamePascal}}\\Module\\{{moduleNamePascal}}\\{{clientNamePascal}}\\Dispatcher;\n\n\\defined('_JEXEC') || die();\n\nuse Joomla\\CMS\\Dispatcher\\AbstractModuleDispatcher;\nuse Joomla\\CMS\\Helper\\HelperFactoryAwareInterface;\nuse Joomla\\CMS\\Helper\\HelperFactoryAwareTrait;\n\nclass Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareInterface\n{\n  use HelperFactoryAwareTrait;\n\n  protected function getLayoutData()\n  {\n    //$this->getHelperFactory()->getHelper('{{moduleNamePascal}}Helper')->getXxxx($data['params'], $this->getApplication());\n    return parent::getLayoutData();\n  }\n}\n"
+              }
+            ],
+            "type": "directory"
+          },
+          {
+            "path": "src/Helper",
+            "name": "Helper",
+            "children": [
+              {
+                "path": "src/Helper/Helper.php",
+                "name": "Helper.php",
+                "type": "file",
+                "contents": "<?php\n\n{{copyright}}\n\nnamespace {{companyNamePascal}}\\Module\\{{moduleNamePascal}}\\{{clientNamePascal}}\\Helper;\n\n\\defined('_JEXEC') || die();\n\nuse Joomla\\CMS\\Factory;\n\nclass {{moduleNamePascal}}Helper\n{\n  public static function testAjax()\n  {\n    $app = Factory::getApplication();\n    if (!$app->getSession()->checkToken()) {\n      throw new \\Exception('Not Allowed');\n    }\n\n    return ['test' => true, 'message' => 'in a bottle'];\n  }\n}\n"
+              }
+            ],
+            "type": "directory"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "tmpl",
+        "name": "tmpl",
+        "children": [
+          {
+            "path": "tmpl/default.php",
+            "name": "default.php",
+            "type": "file",
+            "contents": "<?php\n\n{{copyright}}\n\ndefined('_JEXEC') || die();\n\n/** @var $app \\Joomla\\CMS\\Application\\CMSApplication */\n$app\n  ->getDocument()\n  ->getWebAssetManager()\n  ->registerAndUseScript(\n    'mod_{{moduleNameLowercase}}.default',\n    'mod_{{moduleNameLowercase}}/default.js',\n    [],\n    ['type' => 'module'],\n    ['core']\n  )\n  ->registerAndUseStyle(\n    'mod_{{moduleNameLowercase}}.default',\n    'mod_{{moduleNameLowercase}}/default.css',\n    [],\n    ['media' => 'screen'],\n    []\n  );\n\necho '<p class=\"mod_xxx_js\">Hello from the module {{moduleNameLowercase}}</p>';\n"
+          }
+        ],
+        "type": "directory"
+      }
+    ],
+    "media": [
+      {
+        "path": "css",
+        "name": "css",
+        "children": [
+          {
+            "path": "css/index.css",
+            "name": "index.css",
+            "type": "file",
+            "contents": "/* {{moduleNamePascal}} */\n\n/*\nbody {\n  background-color: rebeccapurple;\n}\n*/\n"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "js",
+        "name": "js",
+        "children": [
+          {
+            "path": "js/index.js",
+            "name": "index.js",
+            "type": "file",
+            "contents": "console.log('Hello from {{moduleNamePascal}}');\n"
+          }
+        ],
+        "type": "directory"
+      }
+    ]
+  },
+  "plugin": {
+    "php": [
+      {
+        "path": "plugin.xml",
+        "name": "plugin.xml",
+        "type": "file",
+        "contents": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<extension type=\"plugin\" group=\"{{typeLowercase}}\" method=\"upgrade\">\n\t<name>plg_{{typePascal}}_{{pluginNameLowercase}}</name>\n  <author>{{authorName}}</author>\n  <creationDate>{{date}}</creationDate>\n  <copyright>(C) {{year}} {{authorName}}, All Rights Reserved.</copyright>\n  <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>\n  <authorEmail>{{authorEmail}}</authorEmail>\n  <authorUrl>{{authorWebsite}}</authorUrl>\n\t<version>0.0.1</version>\n\t<description>Some description</description>\n\t<namespace path=\"src\">{{companyNamePascal}}\\Plugin\\{{typePascal}}\\{{pluginNamePascal}}</namespace>\n\t<files>\n\t\t<folder plugin=\"plg_{{pluginNameLowercase}}\">services</folder>\n\t\t<folder>src</folder>\n\t</files>\n\t<config>\n\t\t<fields name=\"params\">\n\t\t\t<fieldset name=\"basic\">\n\t\t\t</fieldset>\n\t\t</fields>\n\t</config>\n</extension>\n"
+      },
+      {
+        "path": "services",
+        "name": "services",
+        "children": [
+          {
+            "path": "services/provider.php",
+            "name": "provider.php",
+            "type": "file",
+            "contents": "<?php\n\n{{copyright}}\n\ndefined('_JEXEC') || die;\n\nuse Joomla\\CMS\\Extension\\PluginInterface;\nuse Joomla\\CMS\\Factory;\nuse Joomla\\CMS\\Plugin\\PluginHelper;\nuse Joomla\\Database\\DatabaseInterface;\nuse Joomla\\DI\\Container;\nuse Joomla\\DI\\ServiceProviderInterface;\nuse Joomla\\Event\\DispatcherInterface;\nuse {{companyNamePascal}}\\Plugin\\{{typePascal}}\\{{pluginNamePascal}}\\Extension\\{{pluginNamePascal}};\n\nreturn new class implements ServiceProviderInterface\n{\n    /**\n     * Registers the service provider with a DI container.\n     *\n     * @param   Container  $container  The DI container.\n     *\n     * @return  void\n     *\n     * @since   0.0.1\n     */\n    public function register(Container $container)\n    {\n        $container->set(\n            PluginInterface::class,\n            function (Container $container) {\n                $dispatcher = $container->get(DispatcherInterface::class);\n                $plugin     = new {{pluginNamePascal}}(\n                    $dispatcher,\n                    (array) PluginHelper::getPlugin('{{typeLowercase}}', '{{pluginNameLowercase}}')\n                );\n                $plugin->setApplication(Factory::getApplication());\n                $plugin->setDatabase($container->get(DatabaseInterface::class));\n\n                return $plugin;\n            }\n        );\n    }\n};\n"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "src",
+        "name": "src",
+        "children": [
+          {
+            "path": "src/Extension",
+            "name": "Extension",
+            "children": [
+              {
+                "path": "src/Extension/Plugin.php",
+                "name": "Plugin.php",
+                "type": "file",
+                "contents": "<?php\n{{copyright}}\n\nnamespace {{companyNamePascal}}\\Plugin\\{{typePascal}}\\{{pluginNamePascal}}\\Extension;\n\n\\defined('_JEXEC') || die;\n\nuse Joomla\\CMS\\Plugin\\CMSPlugin;\n\n/**\n * {{pluginNamePascal}} Plugin\n */\nfinal class {{pluginNamePascal}} extends CMSPlugin\n{\n    /**\n     * Plugin that retrieves contact information for contact\n     *\n     * @param   string   $context  The context of the content being passed to the plugin.\n     * @param   mixed    &$row     An object with a \"text\" property\n     * @param   mixed    $params   Additional parameters. See {@see PlgContentContent()}.\n     * @param   integer  $page     Optional page number. Unused. Defaults to zero.\n     *\n     * @return  void\n     */\n    public function onContentPrepare($context, &$row, $params, $page = 0)\n    {\n        if (!in_array($context, ['com_content.category', 'com_content.article', 'com_content.featured'])) {\n            return;\n        }\n    }\n}\n"
+              }
+            ],
+            "type": "directory"
+          }
+        ],
+        "type": "directory"
+      }
+    ],
+    "media": [
+      {
+        "path": "css",
+        "name": "css",
+        "children": [
+          {
+            "path": "css/index.css",
+            "name": "index.css",
+            "type": "file",
+            "contents": "/* {{pluginNamePascal}} */\n\n/*\nbody {\n  background-color: rebeccapurple;\n}\n*/\n"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "js",
+        "name": "js",
+        "children": [
+          {
+            "path": "js/index.js",
+            "name": "index.js",
+            "type": "file",
+            "contents": "console.log('Hello from {{pluginNamePascal}}');\n"
+          }
+        ],
+        "type": "directory"
+      }
+    ]
+  },
+  "template": {
+    "php": [
+      {
+        "path": "error.php",
+        "name": "error.php",
+        "type": "file",
+        "contents": "<?php\n\n{{copyright}}\n\ndefined('_JEXEC') || die();\n\nuse Joomla\\CMS\\HTML\\HTMLHelper;\n\n/** @var Joomla\\CMS\\Document\\HtmlDocument $this */\n/** @var Joomla\\CMS\\WebAsset\\WebAssetManager $wa */\n\n// Browsers support SVG favicons\n$this->addHeadLink(HTMLHelper::_('image', 'favicon.svg', '', [], true, 1), 'icon', 'rel', ['type' => 'image/svg+xml']);\n$this->addHeadLink(HTMLHelper::_('image', 'favicon.png', '', [], true, 1), 'alternate icon', 'rel', ['type' => 'image/png']);\n$this->setMetaData('description', 'width=device-width, initial-scale=1');\n\n// Register the template assets\n$this->getWebAssetManager()->useStyle('template.base');\n\n// Get the output for all the template sections\n$component = $this->getBuffer('component');\n$header    = $this->getBuffer('modules', 'header', []);\n$footer    = $this->getBuffer('modules', 'footer', []);\n$messages  = $this->getBuffer('message');\n$debug     = $this->getBuffer('modules', 'debug', []);\n$metas     = $this->getBuffer('metas');\n$styles    = $this->getBuffer('styles');\n$scripts   = $this->getBuffer('scripts');\n\n// Render the page\necho\n'<!doctype html>',\n  '<html lang=\"' . $this->language . '\">',\n  '<head>',\n    $metas,\n    $styles,\n    $scripts,\n  '</head>',\n  '<body>',\n    $header,\n    '<main class=\"wrapper\">', $messages, $component, $debug, '</main>',\n    $footer,\n  '</body>',\n'</html>';\n"
+      },
+      {
+        "path": "index.php",
+        "name": "index.php",
+        "type": "file",
+        "contents": "<?php\n\n{{copyright}}\n\ndefined('_JEXEC') || die();\n\nuse Joomla\\CMS\\HTML\\HTMLHelper;\n\n/** @var Joomla\\CMS\\Document\\HtmlDocument $this */\n/** @var Joomla\\CMS\\WebAsset\\WebAssetManager $wa */\n\n// Browsers support SVG favicons\n$this->addHeadLink(HTMLHelper::_('image', 'favicon.svg', '', [], true, 1), 'icon', 'rel', ['type' => 'image/svg+xml']);\n$this->addHeadLink(HTMLHelper::_('image', 'favicon.png', '', [], true, 1), 'alternate icon', 'rel', ['type' => 'image/png']);\n$this->setMetaData('description', 'width=device-width, initial-scale=1');\n\n// // Register the template assets\n$this->getWebAssetManager()->useStyle('template.base');\n\n// Get the output for all the template sections\n$component = $this->getBuffer('component');\n$header    = $this->getBuffer('modules', 'header', []);\n$footer    = $this->getBuffer('modules', 'footer', []);\n$messages  = $this->getBuffer('message');\n$debug     = $this->getBuffer('modules', 'debug', []);\n$metas     = $this->getBuffer('metas');\n$styles    = $this->getBuffer('styles');\n$scripts   = $this->getBuffer('scripts');\n\n// Render the page\necho\n'<!doctype html>',\n'<html lang=\"' . $this->language . '\">',\n  '<head>',\n    $metas,\n    $styles,\n    $scripts,\n  '</head>',\n  '<body>',\n    $header,\n    '<main class=\"wrapper\">', $messages, $component, $debug, '</main>',\n    $footer,\n  '</body>',\n'</html>';\n"
+      },
+      {
+        "path": "joomla.asset.json",
+        "name": "joomla.asset.json",
+        "type": "file",
+        "contents": "{\n  \"$schema\": \"https://developer.joomla.org/schemas/json-schema/web_assets.json\",\n  \"description\": \"Some description\",\n  \"license\": \"GPL-3.0\",\n  \"name\": \"{{templateNameLowercase}}\",\n  \"version\": \"0.0.1\",\n  \"assets\": [\n    {\n      \"name\": \"template.base\",\n      \"type\": \"preset\",\n      \"dependencies\": [\n        \"template.base#style\",\n        \"template.base#script\"\n      ]\n    },\n    {\n      \"name\": \"template.base\",\n      \"type\": \"style\",\n      \"uri\": \"styles.min.css\"\n    },\n    {\n      \"name\": \"template.base\",\n      \"type\": \"script\",\n      \"uri\": \"scripts.min.js\",\n      \"attributes\": {\n        \"type\": \"module\"\n      },\n      \"dependencies\": [\n        \"template.base.nomodule\"\n      ]\n    },\n    {\n      \"name\": \"template.base.nomodule\",\n      \"type\": \"script\",\n      \"uri\": \"scripts-nomodule.min.js\",\n      \"attributes\": {\n        \"nomodule\": true,\n        \"defer\": true\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "path": "templateDetails.xml",
+        "name": "templateDetails.xml",
+        "type": "file",
+        "contents": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<extension type=\"template\" client=\"{{clientNameLowercase}}\" method=\"upgrade\">\n  <name>{{templateNameLowercase}}</name>\n  <author>{{authorName}}</author>\n  <creationDate>{{date}}</creationDate>\n  <copyright>(C) {{year}} {{authorName}}, All Rights Reserved.</copyright>\n  <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>\n  <authorEmail>{{authorEmail}}</authorEmail>\n  <authorUrl>{{authorWebsite}}</authorUrl>\n  <version>0.0.1</version>\n  <description>Some description</description>\n  <inheritable>1</inheritable>\n  <files>\n    <folder>html</folder>\n    <filename>index.php</filename>\n    <filename>error.php</filename>\n    <filename>joomla.asset.json</filename>\n    <filename>templateDetails.xml</filename>\n  </files>\n  <media folder=\"media\" destination=\"templates/{{clientNameLowercase}}/{{templateNameLowercase}}\">\n    <folder>css</folder>\n    <folder>js</folder>\n    <folder>images</folder>\n  </media>\n  <positions>\n    <position>header</position>\n    <position>debug</position>\n    <position>footer</position>\n  </positions>\n</extension>\n"
+      }
+    ],
+    "media": [
+      {
+        "path": "css",
+        "name": "css",
+        "children": [
+          {
+            "path": "css/styles.css",
+            "name": "styles.css",
+            "type": "file",
+            "contents": "/* {{templateName}} */\n\n/*\nbody {\n  background-color: rebeccapurple;\n}\n*/\n"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "js",
+        "name": "js",
+        "children": [
+          {
+            "path": "js/scripts.js",
+            "name": "scripts.js",
+            "type": "file",
+            "contents": "console.log('Hello from {{templateName}}');\n"
+          }
+        ],
+        "type": "directory"
+      }
+    ]
+  }
+}
