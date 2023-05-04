@@ -27,7 +27,7 @@
   "homepage": "https://github.com/dgrammatiko/create-joomla-extension#readme",
   "preferGlobal": true,
   "dependencies": {
-    "@dgrammatiko/joomla-extension-templates": "0.0.5-alpha2.7",
+    "@dgrammatiko/joomla-extension-templates": "0.0.5-alpha2.9",
     "change-case": "^4.1.2",
     "fs-extra": "^11.1.1",
     "inquirer": "^9.1.5"
