@@ -73,6 +73,6 @@ It will generate a folder structure like:
   |   |
   |   |-- site
   |       |
-  |       |-- module bbb (tpl_bbb)
+  |       |-- template bbb (tpl_bbb)
 
 ```
