@@ -27,10 +27,10 @@
   "homepage": "https://github.com/dgrammatiko/create-joomla-extension#readme",
   "preferGlobal": true,
   "dependencies": {
-    "@dgrammatiko/joomla-extension-templates": "0.0.5-alpha2.9",
+    "@dgrammatiko/joomla-extension-templates": "0.0.5-alpha2.10",
     "change-case": "^4.1.2",
     "fs-extra": "^11.1.1",
-    "inquirer": "^9.1.5"
+    "inquirer": "9.2.1"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.1.0",
@@ -38,7 +38,7 @@
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-terser": "^0.4.1",
     "np": "^7.7.0",
-    "rollup": "^3.20.2"
+    "rollup": "3.21.5"
   },
   "files": [
     "dist/"
