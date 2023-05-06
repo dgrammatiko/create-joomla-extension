@@ -1,6 +1,6 @@
 {
   "name": "@dgrammatiko/create-joomla-extension",
-  "version": "0.0.1-2",
+  "version": "0.0.1-3",
   "publishConfig": {
     "access": "public"
   },
