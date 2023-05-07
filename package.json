@@ -10,7 +10,7 @@
   },
   "exports": "./dist/index.mjs",
   "scripts": {
-    "prepublishOnly": "np --no-cleanup --yolo --no-publish",
+    "prepublishOnly": "npm run bundle && np --no-cleanup --yolo --no-publish",
     "start": "node ./dist/index.mjs",
     "bundle": "rm -rf dist && rollup -c rollup.config.js"
   },
@@ -27,7 +27,7 @@
   "homepage": "https://github.com/dgrammatiko/create-joomla-extension#readme",
   "preferGlobal": true,
   "dependencies": {
-    "@dgrammatiko/joomla-extension-templates": "0.0.5-alpha2.11",
+    "@dgrammatiko/joomla-extension-templates": "0.0.5-alpha2.13",
     "change-case": "^4.1.2",
     "fs-extra": "^11.1.1",
     "inquirer": "9.2.2"
