@@ -38,7 +38,7 @@
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-terser": "^0.4.1",
     "np": "^7.7.0",
-    "rollup": "3.21.5"
+    "rollup": "3.21.6"
   },
   "files": [
     "dist/"
