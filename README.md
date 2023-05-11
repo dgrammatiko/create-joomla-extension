@@ -7,7 +7,7 @@ Joomla 4 instant extension scaffolding
 
 ### Basic commands
 - navigate to the folder that will be the base for your extension(s) through CLI
-- run `npm create @dgrammatiko/create-joomla-extension`
+- run `npm create @dgrammatiko/joomla-extension`
 - Answer the basic questions for the repeated replacable string (alternative a file named `user-info.json` could be copy/pasted in the same path)
 - The `user-info.json` has the following content (if accepting the defaults):
 
