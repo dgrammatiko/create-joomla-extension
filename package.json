@@ -10,9 +10,9 @@
   },
   "exports": "./dist/index.mjs",
   "scripts": {
-    "prepublishOnly": "npm run bundle && np --no-cleanup --yolo --no-publish",
-    "start": "node ./dist/index.mjs",
-    "bundle": "rm -rf dist && rollup -c rollup.config.js"
+    "prepublishOnly": "npm run bundle && npx np --no-cleanup --yolo --no-publish",
+    "bundle": "rm -rf dist && rollup -c rollup.config.js",
+    "update": "npm install $(npm outdated | cut -d' ' -f 1 | sed '1d' | xargs -I '$' echo '$@latest' | xargs echo)  --save-exact"
   },
   "repository": {
     "type": "git",
@@ -35,9 +35,8 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.0",
     "@rollup/plugin-json": "^6.0.0",
-    "@rollup/plugin-node-resolve": "^15.0.2",
-    "@rollup/plugin-terser": "^0.4.1",
-    "np": "^8.0.0",
+    "@rollup/plugin-node-resolve": "15.1.0",
+    "@rollup/plugin-terser": "0.4.3",
     "rollup": "3.23.0"
   },
   "files": [
