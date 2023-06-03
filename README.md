@@ -21,6 +21,7 @@ Joomla 4 instant extension scaffolding
   "userCopyright": "(C) {{currentYear}} Dimitrios Grammatikogiannis"
 }
 ```
+
 - Following steps are: 
 - - Choose the extension type: Component, Module, Library, Plugin or Template
 - - Modules and Templates need to be defined as Site or Administrator
@@ -64,6 +65,10 @@ It will generate a folder structure like:
   |       |-- module www (mod_www)
   |
   |-- plugins
+  |   |
+  |   |-- Type
+  |       |
+  |       |-- plugin uuu (plg_type_uuu)
   |
   |-- templates
   |   |
