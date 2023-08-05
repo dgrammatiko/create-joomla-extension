@@ -30,7 +30,7 @@
     "@dgrammatiko/joomla-extension-templates": "0.0.5-alpha2.14",
     "change-case": "^4.1.2",
     "fs-extra": "^11.1.1",
-    "inquirer": "9.2.9"
+    "inquirer": "9.2.10"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.0",
