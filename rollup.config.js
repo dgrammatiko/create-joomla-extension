@@ -6,11 +6,19 @@ import terser from '@rollup/plugin-terser';
 export default {
   input: 'index.mjs',
   output: {
-    banner: '#!/usr/bin/env node',
+    // banner: '#!/usr/bin/env node',
 		dir: 'dist',
 		format: 'esm',
     // inlineDynamicImports: true,
-    plugins: [terser()],
+    plugins: [terser({
+      module: true,
+      ecma: 2020,
+      compress: {
+        ecma: 2020,
+        pure_getters: true,
+        passes: 2,
+      },
+    })],
     entryFileNames: '[name].mjs',
 	},
   plugins: [
@@ -23,7 +31,7 @@ export default {
         'node_modules/restore-cursor/*.js',
       ]
     }),
-    json()
+    json(),
   ],
   external: ['inquirer']
 };
