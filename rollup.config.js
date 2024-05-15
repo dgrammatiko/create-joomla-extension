@@ -10,15 +10,6 @@ export default {
 		dir: 'dist',
 		format: 'esm',
     // inlineDynamicImports: true,
-    plugins: [terser({
-      module: true,
-      ecma: 2020,
-      compress: {
-        ecma: 2020,
-        pure_getters: true,
-        passes: 2,
-      },
-    })],
     entryFileNames: '[name].mjs',
 	},
   plugins: [
@@ -26,12 +17,22 @@ export default {
       preferBuiltins: true,
     }),
     commonjs({
+      include: /node_modules/,
       ignore: ['readable-stream'],
       dynamicRequireTargets: [
         'node_modules/restore-cursor/*.js',
       ]
     }),
     json(),
+    terser({
+      module: true,
+      ecma: 2020,
+      compress: {
+        ecma: 2020,
+        pure_getters: true,
+        passes: 2,
+      },
+    }),
   ],
-  // external: ['inquirer']
+  external: ['inquirer']
 };

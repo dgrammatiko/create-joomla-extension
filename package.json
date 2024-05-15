@@ -1,38 +1,38 @@
 {
   "name": "@dgrammatiko/create-joomla-extension",
   "version": "0.0.14",
+  "type": "module",
+  "author": "Dimitris Grammatikogiannis",
+  "license": "MIT",
+  "description": "Scaffolding for Joomla Extensions",
   "publishConfig": {
     "access": "public"
   },
-  "description": "Scaffolding for Joomla Extensions",
   "bin": {
-    "create-joomla-extension": "dist/index.mjs"
+    "create-joomla-extension": "dist/index.cjs"
   },
-  "exports": "./dist/index.mjs",
   "scripts": {
     "prepublishOnly": "npm install && npm run bundle && npx np --no-cleanup --yolo --no-publish",
     "bundle": "node buildTemplates.mjs && rm -rf dist && rollup -c rollup.config.js",
     "update": "npm install $(npm outdated | cut -d' ' -f 1 | sed '1d' | xargs -I '$' echo '$@latest' | xargs echo)  --save-exact"
   },
+  "homepage": "https://github.com/dgrammatiko/create-joomla-extension#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dgrammatiko/create-joomla-extension.git"
   },
-  "author": "Dimitris Grammatikogiannis",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/dgrammatiko/create-joomla-extension/issues"
   },
-  "type": "module",
-  "homepage": "https://github.com/dgrammatiko/create-joomla-extension#readme",
-  "preferGlobal": true,
+  "dependencies": {
+    "inquirer": "9.2.21"
+  },
   "devDependencies": {
-    "change-case": "5.4.4",
-    "inquirer": "9.2.21",
     "@rollup/plugin-commonjs": "25.0.7",
     "@rollup/plugin-json": "6.1.0",
     "@rollup/plugin-node-resolve": "15.2.3",
     "@rollup/plugin-terser": "0.4.4",
+    "change-case": "5.4.4",
     "directory-tree": "^3.5.1",
     "rollup": "4.17.2"
   },
