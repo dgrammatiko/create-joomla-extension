@@ -11,7 +11,7 @@
   "exports": "./dist/index.mjs",
   "scripts": {
     "prepublishOnly": "npm install && npm run bundle && npx np --no-cleanup --yolo --no-publish",
-    "bundle": "rm -rf dist && rollup -c rollup.config.js",
+    "bundle": "node buildTemplates.mjs && rm -rf dist && rollup -c rollup.config.js",
     "update": "npm install $(npm outdated | cut -d' ' -f 1 | sed '1d' | xargs -I '$' echo '$@latest' | xargs echo)  --save-exact"
   },
   "repository": {
@@ -26,16 +26,14 @@
   "type": "module",
   "homepage": "https://github.com/dgrammatiko/create-joomla-extension#readme",
   "preferGlobal": true,
-  "dependencies": {
-    "@dgrammatiko/joomla-extension-templates": "0.0.7",
-    "change-case": "5.4.4",
-    "inquirer": "9.2.21"
-  },
   "devDependencies": {
+    "change-case": "5.4.4",
+    "inquirer": "9.2.21",
     "@rollup/plugin-commonjs": "25.0.7",
     "@rollup/plugin-json": "6.1.0",
     "@rollup/plugin-node-resolve": "15.2.3",
     "@rollup/plugin-terser": "0.4.4",
+    "directory-tree": "^3.5.1",
     "rollup": "4.17.2"
   },
   "files": [
