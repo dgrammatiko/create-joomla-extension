@@ -14,12 +14,15 @@ const addContent = (item) =>
 	item.type === "file" ? fs.readFileSync(item.path, { encoding: "utf8" }) : "";
 const fixPath = (item, php) =>
 	php
-		? item.path.replace(`src${sep}root${sep}`, "")
+		? item.path
+				.replace(`tmpl${sep}src${sep}root${sep}`, "")
+				.replace(`tmpl${sep}src${sep}`, `src${sep}`)
 		: item.path
 				.replace(`components${sep}`, "")
 				.replace(`libraries${sep}`, "")
 				.replace(`modules${sep}`, "")
-				.replace(`plugins${sep}`, "");
+				.replace(`plugins${sep}`, "")
+				.replace(`tmpl${sep}media_source${sep}`, `media_source${sep}`);
 
 function recurs(item, php) {
 	item.children.forEach((child) => {
