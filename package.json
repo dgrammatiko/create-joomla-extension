@@ -1,6 +1,6 @@
 {
   "name": "@dgrammatiko/create-joomla-extension",
-  "version": "0.0.15",
+  "version": "0.0.16-0",
   "type": "module",
   "author": "Dimitris Grammatikogiannis",
   "license": "MIT",
