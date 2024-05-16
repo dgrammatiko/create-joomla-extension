@@ -4,3 +4,5 @@ media_src
 ignore
 test
 dist
+
+_templates.js

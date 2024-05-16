@@ -24,10 +24,8 @@
   "bugs": {
     "url": "https://github.com/dgrammatiko/create-joomla-extension/issues"
   },
-  "dependencies": {
-    "inquirer": "9.2.21"
-  },
   "devDependencies": {
+    "@clack/prompts": "^0.7.0",
     "@rollup/plugin-commonjs": "25.0.7",
     "@rollup/plugin-json": "6.1.0",
     "@rollup/plugin-node-resolve": "15.2.3",
