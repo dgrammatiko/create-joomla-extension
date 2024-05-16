@@ -3,7 +3,8 @@ import { intro, outro, isCancel, cancel } from "@clack/prompts";
 import { createUserInfo } from './lib/utils/createUserInfo.mjs';
 import { initialQuestion } from "./lib/utils/initialQuestion.mjs";
 
-intro(`
+(async () => {
+  intro(`
                       _
                      | |
    ___ _ __ ___  __ _| |_ ___
@@ -21,18 +22,18 @@ intro(`
  |  __// . \\| ||  __/ | | \\__ \\ | (_) | | | |
   \\___/_/ \\_\\\\__\\___|_| |_|___/_|\\___/|_| |_|
 `);
+  await createUserInfo();
 
-await createUserInfo();
+  const type = await initialQuestion();
 
-const type = await initialQuestion();
+  if (isCancel(type)) {
+    cancel("Operation cancelled.");
+    process.exit(0);
+  }
 
-if (isCancel(type)) {
-  cancel("Operation cancelled.");
-  process.exit(0);
-}
+  const { builder } = await import("./lib/builder.mjs");
 
-const { builder} = await import('./lib/builder.mjs')
+  await builder(type);
 
-await builder(type);
-
-outro(`You're all set!`);
+  outro(`You're all set!`);
+})();
