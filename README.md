@@ -44,7 +44,8 @@ This is CLI tool that will generate a basic boilerplate of a component, module, 
 The command is expected to be run inside a directory that will become the source of your code.
 It will generate a folder structure like:
 ```
-  --parent folder
+
+  --src (directory for the PHP files)
   |
   |-- components
   |   |
