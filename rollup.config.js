@@ -7,21 +7,21 @@ export default {
   input: 'index.mjs',
   output: {
     // banner: '#!/usr/bin/env node',
-		dir: 'dist',
-		format: 'esm',
+    dir: 'dist',
+    format: 'esm',
     // inlineDynamicImports: true,
     entryFileNames: '[name].mjs',
-	},
+  },
   plugins: [
     nodeResolve({
       preferBuiltins: true,
     }),
     commonjs({
       include: /node_modules/,
-      ignore: ['readable-stream'],
-      dynamicRequireTargets: [
-        'node_modules/restore-cursor/*.js',
-      ]
+      // ignore: ['readable-stream'],
+      // dynamicRequireTargets: [
+      //   'node_modules/restore-cursor/*.js',
+      // ]
     }),
     json(),
     terser({
