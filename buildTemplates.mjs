@@ -1,6 +1,6 @@
 import { execSync } from "node:child_process";
 import fs, { existsSync } from "node:fs";
-import { sep } from "node:path";
+import { sep, extname } from "node:path";
 import dirTree from "directory-tree";
 
 const tmplRepo = "https://github.com/dgrammatiko/joomla-extension-templates.git";
@@ -8,9 +8,10 @@ execSync(`git clone --depth 1 ${tmplRepo} tmpl`);
 
 const folder = "tmpl/src";
 const folderMedia = "tmpl/media_source";
+const utfFiles = [".html",".scss",".mjs",".json",".js",".css",".svg",".php",".xml",".ini",".gitignore",".eslintrc",];
 let treeMedia = { children: [] };
 const data = {};
-const addContent = (item) => item.type === "file" ? fs.readFileSync(item.path, { encoding: "utf8" }) : "";
+const addContent = (item) => item.type === "file" ? fs.readFileSync(item.path, { encoding: utfFiles.includes(extname(item.path)) ? "utf8" : "base64" }) : "";
 const fixPath = (item, php) =>
   php
     ? item.path
