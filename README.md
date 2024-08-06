@@ -81,4 +81,25 @@ It will generate a folder structure like:
   |       |
   |       |-- template bbb (tpl_bbb)
 
+-- www
+   |
+   |-- Joomla instance (needs to be linked to the directory of your local web server (NGINX, etc)
+```
+
+The user journey:
+
+```mermaid
+  graph TD;
+      existing-JSON-file-->extension-type;
+      first-questions-->generate-JSON-file;
+      first-questions-->extension-type;
+      generate-JSON-file-->extension-type;
+      extension-type-->admin-site;
+      extension-type-->plugin-type;
+      admin-site-->create-scaffold;
+      plugin-type-->create-scaffold;
+      create-scaffold-->run-npm-install;
+      run-npm-install-->run-npm-init;
+      run-npm-init-->run-npm-run-build;
+      run-npm-run-build-->run-npm-run-link;      
 ```
