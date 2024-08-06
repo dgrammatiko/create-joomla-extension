@@ -98,8 +98,8 @@ The user journey:
       extension-type-->plugin-type;
       admin-site-->create-scaffold;
       plugin-type-->create-scaffold;
-      create-scaffold-->run-npm-install;
-      run-npm-install-->run-npm-init;
-      run-npm-init-->run-npm-run-build;
-      run-npm-run-build-->run-npm-run-link;      
+      create-scaffold-->npm-install;
+      npm-install-->npm-run-init;
+      npm-run-init-->npm-run-build;
+      npm-run-build-->npm-run-link;      
 ```
