@@ -30,7 +30,7 @@
     "@rollup/plugin-commonjs": "29.0.0",
     "@rollup/plugin-json": "6.1.0",
     "@rollup/plugin-node-resolve": "16.0.3",
-    "@rollup/plugin-terser": "0.4.4",
+    "@rollup/plugin-terser": "1.0.0",
     "change-case": "5.4.4",
     "directory-tree": "^3.5.1",
     "rollup": "4.59.0"
