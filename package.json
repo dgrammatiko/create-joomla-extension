@@ -25,6 +25,9 @@
   "bugs": {
     "url": "https://github.com/dgrammatiko/create-joomla-extension/issues"
   },
+  "scripts": {
+    "prepare": "node buildTemplates.mjs && rollup -c rollup.config.js"
+  }
   "devDependencies": {
     "@clack/prompts": "^1.0.0",
     "@rollup/plugin-commonjs": "29.0.3",
