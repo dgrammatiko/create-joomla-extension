@@ -28,6 +28,9 @@
   "scripts": {
     "prepare": "node buildTemplates.mjs && rollup -c rollup.config.js"
   },
+  "overrides": {
+    "symlink-dir": "9.0.0"
+  },
   "devDependencies": {
     "@clack/prompts": "^1.0.0",
     "@rollup/plugin-commonjs": "29.0.3",
